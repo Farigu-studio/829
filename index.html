@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farigu</title>
+    <title>SOMETIMES ALWAYS</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
@@ -34,7 +34,7 @@
         /* Video Background */
         .video-container {
             position: absolute;
-            top: 150px;
+            top: 60px;
             left: 20px;
             right: 20px;
             bottom: 20px;
@@ -168,24 +168,21 @@
                 ),
 
                 // Header / Overlay UI
-                createElement('div', { className: "absolute top-0 left-0 w-full h-full pointer-events-none z-10" },
+                createElement('div', { className: "absolute top-0 left-0 w-full p-[20px] flex justify-between items-start z-10 pointer-events-none" },
                     // Top Left: Farigu
-                    createElement('div', { className: "absolute top-[75px] left-[20px] -translate-y-1/2 pointer-events-auto" },
-                        createElement('span', { className: "brand-text" }, "Farigu")
-                    ),
+                    createElement('span', { className: "brand-text pointer-events-auto" }, "Farigu"),
+
                     // Top Right: INFO Button
-                    createElement('div', { className: "absolute top-[75px] right-[20px] -translate-y-1/2 pointer-events-auto" },
-                        createElement('button', {
-                            onClick: () => setIsInfoOpen(true),
-                            className: "nav-text bg-transparent border-none p-0"
-                        }, "INFO")
-                    )
+                    createElement('button', {
+                        onClick: () => setIsInfoOpen(true),
+                        className: "nav-text bg-transparent border-none p-0 pointer-events-auto"
+                    }, "INFO")
                 ),
 
                 // Info Overlay
                 isInfoOpen && createElement('div', { className: "info-overlay" },
                     // Info Header
-                    createElement('div', { className: "w-full p-6 flex justify-between items-start fixed top-0 left-0" },
+                    createElement('div', { className: "w-full p-[20px] flex justify-between items-start fixed top-0 left-0" },
                         createElement('span', { className: "brand-text" }, "Farigu"),
                         createElement('button', {
                             onClick: () => setIsInfoOpen(false),
