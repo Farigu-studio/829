@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="google" content="notranslate">
     <title>Farigu</title>
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
 
     <!-- Tailwind CSS (Optional utility) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,10 +33,10 @@
         /* Video Background */
         .video-container {
             position: absolute;
-            top: 60px;
+            top: 80px;
             left: 20px;
             right: 20px;
-            bottom: 20px;
+            bottom: 60px;
             overflow: hidden;
             background-color: #000;
             z-index: 0;
@@ -69,6 +68,24 @@
         }
 
         .nav-text:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Text Styles */
+        .footer-text {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: black;
+            text-decoration: none;
+            cursor: default;
+        }
+
+        .footer-button {
+            cursor: pointer;
+        }
+
+        .footer-button:hover {
             text-decoration: underline;
         }
 
@@ -168,7 +185,7 @@
                 ),
 
                 // Header / Overlay UI
-                createElement('div', { className: "absolute top-0 left-0 w-full p-[20px] flex justify-between items-start z-10 pointer-events-none" },
+                createElement('div', { className: "absolute top-0 left-0 w-full p-[20px] flex justify-between items-end z-10 pointer-events-none" },
                     // Top Left: Farigu
                     createElement('span', { className: "brand-text pointer-events-auto" }, "Farigu"),
 
@@ -179,10 +196,26 @@
                     }, "INFO")
                 ),
 
+                // Footer Menu
+                createElement('div', { className: "absolute bottom-0 left-0 w-full p-[20px] flex justify-between items-end z-10 pointer-events-none" },
+                    // Left Group: Description Items
+                    createElement('div', { className: "flex gap-48 pointer-events-auto" },
+                        createElement('span', { className: "footer-text" }, "Clair de Lune"),
+                        createElement('span', { className: "footer-text" }, "Digital Video Still"),
+                        createElement('span', { className: "footer-text" }, "2025"),
+                        createElement('span', { className: "footer-text" }, "With 今老")
+                    ),
+                    // Right Item: + Info Button
+                    createElement('button', {
+                        // onClick: () => console.log("Navigate to video info page"), // Placeholder for future navigation
+                        className: "footer-text footer-button bg-transparent border-none p-0 pointer-events-auto"
+                    }, "+ Info")
+                ),
+
                 // Info Overlay
                 isInfoOpen && createElement('div', { className: "info-overlay" },
                     // Info Header
-                    createElement('div', { className: "w-full p-[20px] flex justify-between items-start fixed top-0 left-0" },
+                    createElement('div', { className: "w-full p-[20px] flex justify-between items-end fixed top-0 left-0" },
                         createElement('span', { className: "brand-text" }, "Farigu"),
                         createElement('button', {
                             onClick: () => setIsInfoOpen(false),
