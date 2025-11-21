@@ -1,172 +1,435 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farigu</title>
-    <meta name="description" content="Farigu Visuals" />
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
-            },
-          },
-        },
-      };
-    </script>
 
-    <!-- React & Babel (UMD for stability) -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  
 
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #e5e5e5;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      }
-      /* Hide scrollbar */
-      ::-webkit-scrollbar {
-        display: none;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
-  }
-}
-</script>
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Farigu</title>
+
+  
+
+    <!-- Fonts -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+
+  
+
+    <!-- Tailwind CSS (Optional utility) -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+  
+
+    <!-- React & Babel -->
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  
+
+    <style>
+
+        /* Global Styles */
+
+        body,
+
+        html,
+
+        #root {
+
+            width: 100%;
+
+            height: 100%;
+
+            overflow: hidden;
+
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+
+            background-color: white;
+
+            color: black;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+  
+
+        /* Video Background */
+
+        .video-container {
+
+            position: absolute;
+
+            top: 150px;
+
+            left: 20px;
+
+            right: 20px;
+
+            bottom: 20px;
+
+            overflow: hidden;
+
+            background-color: #000;
+
+            z-index: 0;
+
+        }
+
+  
+
+        video {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+        }
+
+  
+
+        /* Header Text Styles */
+
+        .brand-text {
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.025em;
+
+            color: black;
+
+            text-decoration: none;
+
+        }
+
+  
+
+        .nav-text {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: -0.025em;
+
+            color: black;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+        }
+
+  
+
+        .nav-text:hover {
+
+            text-decoration: underline;
+
+        }
+
+  
+
+        /* Info Overlay Styles */
+
+        .info-overlay {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background-color: #f0f0f0;
+
+            z-index: 50;
+
+            display: flex;
+
+            flex-direction: column;
+
+            animation: fadeIn 0.3s ease-in-out;
+
+        }
+
+  
+
+        @keyframes fadeIn {
+
+            from {
+
+                opacity: 0;
+
+            }
+
+  
+
+            to {
+
+                opacity: 1;
+
+            }
+
+        }
+
+  
+
+        .info-content {
+
+            flex: 1;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+        }
+
+  
+
+        .info-main {
+
+            font-size: 36px;
+
+            font-weight: 700;
+
+            line-height: 1.25;
+
+            margin-bottom: 32px;
+
+        }
+
+  
+
+        .info-sub {
+
+            font-size: 14px;
+
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+            margin-top: 32px;
+
+        }
+
+  
+
+        .info-sub p {
+
+            margin-bottom: 8px;
+
+        }
+
+  
+
+        .info-sub a {
+
+            color: black;
+
+            text-decoration: none;
+
+            padding: 0 4px;
+
+        }
+
+  
+
+        .info-sub a:hover {
+
+            background-color: black;
+
+            color: white;
+
+        }
+
+    </style>
+
 </head>
-  <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-      const { useState, useEffect } = React;
+  
 
-      // --- COMPONENTS ---
+<body>
 
-      const Background = () => {
-        return (
-          <div className="fixed inset-0 -z-20">
-            {/* User provided background image */}
-            <img 
-              src="./background.png"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                // Fallback if image is missing
-                document.getElementById('fallback-bg').style.display = 'block';
-              }}
-              alt="Background" 
-              className="w-full h-full object-cover"
-            />
-            <div id="fallback-bg" className="hidden w-full h-full bg-gray-300"></div>
-          </div>
-        );
-      };
+    <div id="root"></div>
 
-      const VideoObject = () => {
-        return (
-          <div className="fixed inset-0 flex items-center justify-center -z-10 p-8">
-            {/* 
-               Video Container 
-               This is centered. To emulate it being "inside" an object in the photo,
-               we can adjust margins or transforms here. 
-               For now, it's strictly centered with a shadow to pop.
-            */}
-            <div className="relative w-[60vw] max-w-md aspect-[3/4] bg-black shadow-2xl overflow-hidden rotate-[-2deg]">
-               <video 
-                 className="w-full h-full object-cover"
-                 src="./background.mp4"
-                 autoPlay 
-                 loop 
-                 muted 
-                 playsInline
-               >
-                 {/* Fallback message */}
-                 <div className="w-full h-full flex items-center justify-center text-white">
-                   VIDEO LOAD FAILED
-                 </div>
-               </video>
-               {/* Glare/Reflection effect */}
-               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none"></div>
-            </div>
-          </div>
-        );
-      };
+  
 
-      const Header = ({ onInfoClick }) => (
-        <header className="fixed top-0 w-full p-6 z-40 flex justify-between items-start">
-          {/* Top Left: Brand */}
-          <h1 className="text-sm md:text-base font-bold tracking-tight text-black">
-            Farigu
-          </h1>
-          
-          {/* Top Right: Info Trigger */}
-          <button 
-            onClick={onInfoClick}
-            className="text-sm md:text-base font-bold tracking-tight text-black uppercase hover:underline"
-          >
-            Info
-          </button>
-        </header>
-      );
+    <script>
 
-      const InfoOverlay = ({ isOpen, onClose }) => {
-        if (!isOpen) return null;
+        const { useState, useEffect, useRef, createElement } = React;
 
-        return (
-          <div className="fixed inset-0 z-50 bg-[#f0f0f0] text-black flex flex-col p-6 animate-fade-in">
-            <div className="flex justify-between items-start">
-               <h1 className="text-sm md:text-base font-bold">Farigu</h1>
-               <button onClick={onClose} className="text-sm md:text-base font-bold uppercase hover:underline">Close</button>
-            </div>
-            
-            <div className="flex-1 flex flex-col justify-center items-center text-center space-y-6">
-              <p className="text-2xl md:text-4xl font-bold leading-tight max-w-2xl">
-                VISUAL ARCHIVE<br/>
-                BASED IN SEOUL<br/>
-                EST. 2025
-              </p>
-              <div className="pt-8 space-y-2 text-sm font-mono">
-                <p>VIDEO / DIRECTION / ART</p>
-                <p><a href="mailto:contact@farigu.com" className="hover:bg-black hover:text-white px-1">contact@farigu.com</a></p>
-              </div>
-            </div>
-          </div>
-        );
-      };
+  
 
-      const App = () => {
-        const [isInfoOpen, setIsInfoOpen] = useState(false);
+        const App = () => {
 
-        return (
-          <div className="relative w-full h-screen">
-            <Background />
-            <VideoObject />
-            <Header onInfoClick={() => setIsInfoOpen(true)} />
-            <InfoOverlay isOpen={isInfoOpen} onClose={() => setIsInfoOpen(false)} />
-          </div>
-        );
-      };
+            const [isInfoOpen, setIsInfoOpen] = useState(false);
 
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<App />);
-    </script>
-  </body>
+            const videoRef = useRef(null);
+
+  
+
+            useEffect(() => {
+
+                if (videoRef.current) {
+
+                    videoRef.current.muted = true;
+
+                    videoRef.current.play().catch(e => console.error("Video autoplay failed:", e));
+
+                }
+
+            }, []);
+
+  
+
+            return createElement('div', { className: "w-full h-full relative" },
+
+                // Video Container
+
+                createElement('div', { className: "video-container" },
+
+                    createElement('video', {
+
+                        ref: videoRef,
+
+                        autoPlay: true,
+
+                        muted: true,
+
+                        loop: true,
+
+                        playsInline: true
+
+                    },
+
+                        createElement('source', { src: "background.mp4", type: "video/mp4" }),
+
+                        "Your browser does not support the video tag."
+
+                    )
+
+                ),
+
+  
+
+                // Header / Overlay UI
+
+                createElement('div', { className: "absolute top-0 left-0 w-full h-full pointer-events-none z-10" },
+
+                    // Top Left: Farigu
+
+                    createElement('div', { className: "absolute top-[75px] left-[20px] -translate-y-1/2 pointer-events-auto" },
+
+                        createElement('span', { className: "brand-text" }, "Farigu")
+
+                    ),
+
+                    // Top Right: INFO Button
+
+                    createElement('div', { className: "absolute top-[75px] right-[20px] -translate-y-1/2 pointer-events-auto" },
+
+                        createElement('button', {
+
+                            onClick: () => setIsInfoOpen(true),
+
+                            className: "nav-text bg-transparent border-none p-0"
+
+                        }, "INFO")
+
+                    )
+
+                ),
+
+  
+
+                // Info Overlay
+
+                isInfoOpen && createElement('div', { className: "info-overlay" },
+
+                    // Info Header
+
+                    createElement('div', { className: "w-full p-6 flex justify-between items-start fixed top-0 left-0" },
+
+                        createElement('span', { className: "brand-text" }, "Farigu"),
+
+                        createElement('button', {
+
+                            onClick: () => setIsInfoOpen(false),
+
+                            className: "nav-text bg-transparent border-none p-0"
+
+                        }, "CLOSE")
+
+                    ),
+
+                    // Info Content
+
+                    createElement('div', { className: "info-content" },
+
+                        createElement('div', { className: "info-main" },
+
+                            "VISUAL ARCHIVE", createElement('br'),
+
+                            "BASED IN SEOUL", createElement('br'),
+
+                            "EST. 2025"
+
+                        ),
+
+                        createElement('div', { className: "info-sub" },
+
+                            createElement('p', null, "VIDEO / DIRECTION / ART"),
+
+                            createElement('p', null,
+
+                                createElement('a', { href: "mailto:contact@farigu.com" }, "contact@farigu.com")
+
+                            )
+
+                        )
+
+                    )
+
+                )
+
+            );
+
+        };
+
+  
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+
+        root.render(createElement(App));
+
+    </script>
+
+</body>
+
+  
+
 </html>
