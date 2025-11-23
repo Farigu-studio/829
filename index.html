@@ -180,70 +180,97 @@
     <div id="root"></div>
 
     <script>
-        ref: videoRef,
-            autoPlay: true,
-                muted: true,
-                    loop: true,
+        const { useState, useEffect, useRef, createElement } = React;
+
+        const App = () => {
+            const [isInfoOpen, setIsInfoOpen] = useState(false);
+            const videoRef = useRef(null);
+
+            useEffect(() => {
+                if (videoRef.current) {
+                    // Ensure muted is set for autoplay policy
+                    videoRef.current.defaultMuted = true;
+                    videoRef.current.muted = true;
+
+                    const playVideo = async () => {
+                        try {
+                            await videoRef.current.play();
+                        } catch (err) {
+                            console.log("Autoplay failed, retrying on interaction", err);
+                        }
+                    };
+                    playVideo();
+                }
+            }, []);
+
+            return createElement('div', { className: "w-full h-full relative" },
+                // Video Container
+                createElement('div', { className: "video-container" },
+                    createElement('video', {
+                        ref: videoRef,
+                        autoPlay: true,
+                        muted: true,
+                        loop: true,
                         playsInline: true
                     },
-        createElement('source', { src: "background.mp4", type: "video/mp4" }),
-            "Your browser does not support the video tag."
+                        createElement('source', { src: "background.mp4", type: "video/mp4" }),
+                        "Your browser does not support the video tag."
                     )
                 ),
 
-        // Header / Overlay UI
-        createElement('div', { className: "absolute top-0 left-0 w-full p-[20px] flex justify-between items-end z-10 pointer-events-none" },
-            // Top Left: Farigu
-            createElement('span', { className: "brand-text pointer-events-auto" }, "Farigu"),
+                // Header / Overlay UI
+                createElement('div', { className: "absolute top-0 left-0 w-full p-[20px] flex justify-between items-end z-10 pointer-events-none" },
+                    // Top Left: Farigu
+                    createElement('span', { className: "brand-text pointer-events-auto" }, "Farigu"),
 
-            // Top Right: INFO Button
-            createElement('button', {
-                onClick: () => setIsInfoOpen(true),
-                className: "nav-text bg-transparent border-none p-0 pointer-events-auto"
-            }, "INFO")
-        ),
-
-            // Footer Menu
-            createElement('div', { className: "absolute bottom-0 left-0 w-full p-[20px] flex justify-between items-end z-10 pointer-events-none" },
-                // Left Group: Description Items
-                createElement('div', { className: "flex flex-col md:flex-row gap-2 md:gap-48 pointer-events-auto" },
-                    createElement('span', { className: "footer-text" }, "Clair de Lune"),
-                    createElement('span', { className: "footer-text" }, "Digital Video Still"),
-                    createElement('span', { className: "footer-text" }, "2025"),
-                    createElement('span', { className: "footer-text" }, "With 今老")
-                ),
-                // Right Item: + Info Button
-                createElement('button', {
-                    // onClick: () => console.log("Navigate to video info page"), // Placeholder for future navigation
-                    className: "footer-text footer-button bg-transparent border-none p-0 pointer-events-auto"
-                }, "+ Info")
-            ),
-
-            // Info Overlay
-            isInfoOpen && createElement('div', { className: "info-overlay" },
-                // Info Header
-                createElement('div', { className: "w-full p-[20px] flex justify-between items-end fixed top-0 left-0" },
-                    createElement('span', { className: "brand-text" }, "Farigu"),
+                    // Top Right: INFO Button
                     createElement('button', {
-                        onClick: () => setIsInfoOpen(false),
-                        className: "nav-text bg-transparent border-none p-0"
-                    }, "CLOSE")
+                        onClick: () => setIsInfoOpen(true),
+                        className: "nav-text bg-transparent border-none p-0 pointer-events-auto"
+                    }, "INFO")
                 ),
-                // Info Content
-                createElement('div', { className: "info-content" },
-                    createElement('div', { className: "info-main" },
-                        "VISUAL ARCHIVE", createElement('br'),
-                        "BASED IN SEOUL", createElement('br'),
-                        "EST. 2025"
+
+                // Footer Menu
+                createElement('div', { className: "absolute bottom-0 left-0 w-full p-[20px] flex justify-between items-end z-10 pointer-events-none" },
+                    // Left Group: Description Items
+                    createElement('div', { className: "flex flex-col md:flex-row gap-2 md:gap-48 pointer-events-auto" },
+                        createElement('span', { className: "footer-text" }, "Clair de Lune"),
+                        createElement('span', { className: "footer-text" }, "Digital Video Still"),
+                        createElement('span', { className: "footer-text" }, "2025"),
+                        createElement('span', { className: "footer-text" }, "With 今老")
                     ),
-                    createElement('div', { className: "info-sub" },
-                        createElement('p', null, "VIDEO / DIRECTION / ART"),
-                        createElement('p', null,
-                            createElement('a', { href: "mailto:contact@farigu.com" }, "contact@farigu.com")
+                    // Right Item: + Info Button
+                    createElement('button', {
+                        // onClick: () => console.log("Navigate to video info page"), // Placeholder for future navigation
+                        className: "footer-text footer-button bg-transparent border-none p-0 pointer-events-auto"
+                    }, "+ Info")
+                ),
+
+                // Info Overlay
+                isInfoOpen && createElement('div', { className: "info-overlay" },
+                    // Info Header
+                    createElement('div', { className: "w-full p-[20px] flex justify-between items-end fixed top-0 left-0" },
+                        createElement('span', { className: "brand-text" }, "Farigu"),
+                        createElement('button', {
+                            onClick: () => setIsInfoOpen(false),
+                            className: "nav-text bg-transparent border-none p-0"
+                        }, "CLOSE")
+                    ),
+                    // Info Content
+                    createElement('div', { className: "info-content" },
+                        createElement('div', { className: "info-main" },
+                            "VISUAL ARCHIVE", createElement('br'),
+                            "BASED IN SEOUL", createElement('br'),
+                            "EST. 2025"
+                        ),
+                        createElement('div', { className: "info-sub" },
+                            createElement('p', null, "VIDEO / DIRECTION / ART"),
+                            createElement('p', null,
+                                createElement('a', { href: "mailto:contact@farigu.com" }, "contact@farigu.com")
+                            )
                         )
                     )
                 )
-            )
             );
         };
 
