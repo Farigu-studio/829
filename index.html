@@ -192,20 +192,40 @@
 
             useEffect(() => {
                 if (videoRef.current) {
+                    const video = videoRef.current;
+
                     // Force attributes for mobile support
-                    videoRef.current.setAttribute('playsinline', 'true');
-                    videoRef.current.setAttribute('muted', 'true');
-                    videoRef.current.defaultMuted = true;
-                    videoRef.current.muted = true;
+                    video.setAttribute('playsinline', 'true');
+                    video.setAttribute('muted', 'true');
+                    video.defaultMuted = true;
+                    video.muted = true;
 
                     const playVideo = async () => {
                         try {
-                            await videoRef.current.play();
+                            await video.play();
                         } catch (err) {
-                            console.log("Autoplay failed, retrying on interaction", err);
+                            console.log("Autoplay failed, waiting for interaction", err);
                         }
                     };
+
+                    // Attempt play immediately
                     playVideo();
+
+                    // Fallback: Play on first touch/click anywhere
+                    const handleInteraction = () => {
+                        playVideo();
+                        // Remove listeners after first interaction
+                        document.removeEventListener('touchstart', handleInteraction);
+                        document.removeEventListener('click', handleInteraction);
+                    };
+
+                    document.addEventListener('touchstart', handleInteraction);
+                    document.addEventListener('click', handleInteraction);
+
+                    return () => {
+                        document.removeEventListener('touchstart', handleInteraction);
+                        document.removeEventListener('click', handleInteraction);
+                    };
                 }
             }, []);
 
